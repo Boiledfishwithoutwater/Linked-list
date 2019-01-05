@@ -1,0 +1,62 @@
+public class ceshi {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ceshi a=new ceshi();
+		//a.toucha();
+		//a.weicha();
+		a.daozhifa();
+		//a.charufa();
+		//a.shachufa();
+		//a.hebingfa();
+	}
+	public static void toucha()
+	{
+		Scanner reader = new Scanner(System.in);
+		Node head=Node.touchafa(reader);
+		Node.display(head);
+	}
+	public static void weicha()
+	{
+		Scanner reader= new Scanner(System.in);
+		Node head=Node.weichafa(reader);
+		head.display(head);
+	}
+	public static void charufa()
+	{
+		Scanner reader = new Scanner(System.in);
+		Node head = Node.weichafa(reader);
+		head.display(head);
+		System.out.println();
+		Node node = new Node(5);
+		Node rehead = head.charu(node);
+		rehead.display(rehead);
+	}
+	public static void daozhifa()
+	{
+		Node head=new Node();
+		head.chuangzao(head);
+		head.print();
+		Node changed=head.daozhi(head);
+		changed.display(changed);
+	}
+	public static void shachufa()
+	{
+		Scanner reader=new Scanner(System.in);
+		Node head=Node.weichafa(reader);
+		head.display(head);
+		System.out.println();
+		Node node=new Node(2);
+		Node rehead=head;
+		rehead.print();
+	}
+	public static void hebingfa()
+	{
+		Scanner reader=new Scanner(System.in);
+		Node head=Node.weichafa(reader);
+		Node head2=Node.weichafa(reader);
+		Node rehead=Node.hebing(head,head2);
+		rehead.print();
+	}
+
+}
