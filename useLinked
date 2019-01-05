@@ -1,0 +1,275 @@
+package zuoyeZYDL;
+
+import java.util.Scanner;
+
+
+public class Node {
+	int data;//定义一个链表的data——私有变量
+	Node next;//定义一个点
+
+	public Node() 
+	{
+		this.data = 0;
+		this.next = null;
+	}
+
+	public Node(int data)
+	{
+		this.data = data;
+		this.next = null;
+	}
+
+	public static Node createLinkedByHead(Scanner reader)
+	{
+		int m = reader.nextInt();
+		Node head = null;
+		while (m > 0) 
+		{
+			Node p = new Node(m);
+			p.next = head;//循环条件，把head头赋给p.next，意思是p的链的标记
+			head = p;//把p这个链的位置对应的数给头
+			
+			m = reader.nextInt();//获取m的值
+		}
+		return head;//返回head值，循环打印链表
+	}
+	public static  Node createLinkedByTail(Scanner reader)
+	{
+		int m = reader.nextInt();
+		Node head = null;
+		Node tail = null;
+		while(m>0)
+		{
+			Node p = new Node(m);
+			if(head == null)
+			{
+				head = tail = p;
+			}
+			else
+			{
+				tail.next = p;//如果不为空，则有条件进行循环
+				tail = p;//循环插入
+			}
+			m = reader.nextInt();
+		}
+		return head;
+	}
+	
+	public static void createLinked(Node node)
+	{
+		Scanner reader = new Scanner(System.in);
+		int m = reader.nextInt();
+		Node tail = null;//			
+		while(m>0)
+		{
+			Node p = new Node(m);
+			if(node.next == null)
+			{
+				node.next = tail = p;
+			}else
+			{
+				tail.next = p;
+				tail = p;
+			}
+			m = reader.nextInt();
+		}
+	}
+	
+	public  Node downLinked(Node head)//倒置
+	{
+		if(head == null || head.next == null)return head;
+		Node rehead = downLinked(head.next);//rehead其实就是最后的head
+		head.next.next = head;
+		head.next = null;
+		return rehead;
+	}
+
+	public Node downLinked2(Node h)//取第一个节点，剩下的按头插法插入
+	{
+		Node p = h;
+		//h = null;跟下面的if语句前半个可以互换
+		while(p != null)
+		{
+			if(p == h)
+			{
+				Node q = p.next;
+				p.next = null;
+				h = p;
+				p = q;
+			}else
+			{
+				Node q = p.next;
+				p.next = h;
+				h = p;
+				p = q;
+			}
+			
+			
+		}
+		return h;
+	}
+	public Node downLinked3(Node head)//取最后的节点，剩下的按尾插法插入
+	{
+		Node h = null;
+		Node t = null;
+		while(head.next != null)//找多少次最后一个Node的循环
+		{
+			Node p = head;
+			Node q = head;
+			while(p.next != null)//找最后一个Node的循环
+			{
+				q = p;
+				p = p.next;
+			}
+			q.next = null;
+			if(h == null) t = h = p;
+			else
+			{
+				t.next = p;
+				t = p;
+			}
+		}
+		return h;
+	}
+	
+	
+	public Node insert(Node node)
+	{
+		Node cur = this;
+		Node head = cur;
+		Node pre = null;
+		while(cur!=null)
+		{
+			if(node.data<cur.data)break;
+			pre = cur;
+			cur = cur.next;
+		}
+		if(cur==pre)
+		{
+			node.next = head;
+			head = node;
+		}else
+		{
+			node.next = pre.next;
+			pre.next = node;
+		}
+		
+		return head;
+		
+	}
+	
+	public Node delete(Node p)
+	{
+		Node cur = this;
+		Node head = cur;
+		Node pre = null;
+		
+		while(cur.data!=p.data)
+		{
+			pre = cur;
+			cur = cur.next;
+		}
+		if(pre == null)
+		{
+			pre = cur;
+			cur = cur.next;
+			head = cur;
+			pre = null;
+			while(cur.data == p.data)
+			{
+				cur = cur.next;
+				head = cur;
+			}
+		}else if(cur.next != null)
+		{
+			pre.next = cur.next;
+			cur = cur.next;
+			while(cur.data == p.data)
+			{
+				cur = cur.next;
+				pre.next = cur.next;
+			}
+		}else if(cur.next == null)
+		{
+			pre.next = null;
+		}
+		return head;
+	}
+	
+	public static Node combine(Node p,Node q)
+	{
+		Node head = null;
+		Node node = null;
+		if(p == null)return q;
+		else if(q == null)return p;
+		if(node == null)
+		{
+			if(p.data<q.data)
+			{
+				node = p;
+				p = p.next;
+				head = node;
+			}else
+			{
+				node = q;
+				q = q.next;
+				head = node;
+			}
+		}
+		while(p != null && q != null)
+		{
+			if(p.data<q.data)
+			{
+				node.next = p;
+				node = p;
+				p = p.next;
+			}else
+			{
+				node.next = q;
+				node = q;
+				q = q.next;
+			}
+		}
+		if(p == null)
+		{
+			while(q != null)
+			{
+				node.next = q;
+				node = q;
+				q = q.next;
+			}
+		}else if(q == null)
+		{
+			while(p != null)
+			{
+				node.next = p;
+				node = p;
+				p = p.next;
+			}
+		}
+		return head;
+	}
+	
+	public void print() 
+	{
+		Node node = new Node();
+		node = this;
+		if(node.data == 0)node = this.next;
+		while (node != null) 
+		{
+			if(node.data == 0)break;
+			System.out.println(node.data);
+			node = node.next;
+		}
+	}
+
+	public static void printLinked(Node head) 
+	{
+		while (head != null) {
+			if(head.data == 0)break;
+			System.out.println(head.data);
+			head = head.next;
+		}
+	}
+	
+}
